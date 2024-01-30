@@ -1,0 +1,21 @@
+# Based on: https://github.com/awslabs/aws-virtual-gpu-device-plugin/blob/master/examples/mps/mps.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nvidia-mps
+spec:
+  restartPolicy: OnFailure
+  hostIPC: true
+  containers:
+  - image: nvidia/mps
+    name: mps
+    resources:
+      limits:
+        nvidia.com/gpu: 0
+    volumeMounts:
+    - name: nvidia-mps
+      mountPath: /tmp/nvidia-mps
+  volumes:
+  - name: nvidia-mps
+    hostPath:
+      path: /tmp/nvidia-mps
